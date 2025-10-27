@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+
+/* Admin Layout Styles */
+.nav-item {
+  @apply flex items-center gap-3 px-3 py-3 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all cursor-pointer relative;
+}
+
+.nav-item.expanded {
+  @apply justify-start;
+}
+
+.nav-item:not(.expanded) {
+  @apply justify-center;
+}
+
+.nav-icon {
+  @apply w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all;
+}
+
+.nav-item:hover .nav-icon {
+  @apply bg-purple-100;
+}
+
+.nav-text {
+  @apply font-medium text-sm whitespace-nowrap;
+}
+
+.router-link-active.nav-item {
+  @apply bg-linear-to-r from-purple-600 to-indigo-600 text-white;
+}
+
+.router-link-active.nav-item .nav-icon {
+  @apply bg-white/20;
+}
+
+.router-link-active.nav-item:hover {
+  @apply bg-linear-to-r from-purple-700 to-indigo-700 text-white;
+}
+
+.router-link-active.nav-item:hover .nav-icon {
+  @apply bg-white/30;
+}
