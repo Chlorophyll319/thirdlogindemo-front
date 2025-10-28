@@ -1,0 +1,32 @@
+steps:
+  # 步驟 1：上傳所有檔案到 Cloud Storage
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'storage'
+      - 'rsync'
+      - '-r'
+      - '-d'
+      - '.'
+      - 'gs://thirdlogindemo-frontend/'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=asia-east1'
+
+  # 步驟 2：設定 index.html 的快取頭
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'storage'
+      - 'objects'
+      - 'update'
+      - 'gs://thirdlogindemo-frontend/index.html'
+      - '--cache-control=public, max-age=3600'
+
+  # 步驟 3：設定靜態資源的長期快取
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'storage'
+      - 'objects'
+      - 'update'
+      - 'gs://thirdlogindemo-frontend/**/*.{js,css,png,jpg,jpeg,gif,svg,woff,woff2}'
+      - '--cache-control=public, max-age=31536000'
+
+timeout: '600s'
