@@ -5,11 +5,8 @@ steps:
       - 'storage'
       - 'rsync'
       - '-r'
-      - '-d'
       - '.'
       - 'gs://thirdlogindemo-frontend/'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=asia-east1'
 
   # 步驟 2：設定 index.html 的快取頭
   - name: 'gcr.io/cloud-builders/gcloud'
