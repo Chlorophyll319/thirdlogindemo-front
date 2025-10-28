@@ -20,13 +20,37 @@ steps:
       - 'gs://thirdlogindemo-frontend/index.html'
       - '--cache-control=public, max-age=3600'
 
-  # 步驟 3：設定靜態資源的長期快取
+  # 步驟 3：設定 JS 檔案的長期快取
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'storage'
       - 'objects'
       - 'update'
-      - 'gs://thirdlogindemo-frontend/**/*.{js,css,png,jpg,jpeg,gif,svg,woff,woff2}'
+      - 'gs://thirdlogindemo-frontend/'
       - '--cache-control=public, max-age=31536000'
+      - '--match-glob=**.js'
+
+  # 步驟 4：設定 CSS 檔案的長期快取
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'storage'
+      - 'objects'
+      - 'update'
+      - 'gs://thirdlogindemo-frontend/'
+      - '--cache-control=public, max-age=31536000'
+      - '--match-glob=**.css'
+
+  # 步驟 5：設定圖片檔案的長期快取
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'storage'
+      - 'objects'
+      - 'update'
+      - 'gs://thirdlogindemo-frontend/'
+      - '--cache-control=public, max-age=31536000'
+      - '--match-glob=**.{png,jpg,jpeg,gif,svg}'
 
 timeout: '600s'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
