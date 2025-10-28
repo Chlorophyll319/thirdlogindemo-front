@@ -11,12 +11,16 @@ steps:
       - 'checkout'
       - 'gh-pages'
 
-  # 步驟 2：上傳所有檔案到 Cloud Storage
+  # 步驟 2：上傳所有檔案到 Cloud Storage（排除 .git 資料夾）
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'storage'
       - 'rsync'
       - '-r'
+      - '--delete'
+      - '--exclude=.git'
+      - '--exclude=.git/**'
+      - '--exclude=cloudbuild.yaml'
       - '.'
       - 'gs://thirdlogindemo-frontend/'
 
