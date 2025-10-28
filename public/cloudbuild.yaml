@@ -1,5 +1,20 @@
 steps:
-  # 步驟 1：上傳所有檔案到 Cloud Storage
+  # 步驟 1：簽出 gh-pages 分支
+  - name: 'gcr.io/cloud-builders/git'
+    args:
+      - 'checkout'
+      - 'gh-pages'
+
+  # 步驟 2：清空儲存桶（可選，確保沒有舊檔案）
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'storage'
+      - 'rm'
+      - '-r'
+      - 'gs://thirdlogindemo-frontend/'
+    onFailure: 'CONTINUE'
+
+  # 步驟 3：上傳所有檔案到 Cloud Storage
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'storage'
@@ -8,7 +23,7 @@ steps:
       - '.'
       - 'gs://thirdlogindemo-frontend/'
 
-  # 步驟 2：設定 index.html 的快取頭
+  # 步驟 4：設定 index.html 的快取頭
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'storage'
@@ -17,7 +32,7 @@ steps:
       - 'gs://thirdlogindemo-frontend/index.html'
       - '--cache-control=public, max-age=3600'
 
-  # 步驟 3：設定 JS 檔案的長期快取
+  # 步驟 5：設定 JS 檔案的長期快取
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'storage'
@@ -27,7 +42,7 @@ steps:
       - '--cache-control=public, max-age=31536000'
       - '--match-glob=**.js'
 
-  # 步驟 4：設定 CSS 檔案的長期快取
+  # 步驟 6：設定 CSS 檔案的長期快取
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'storage'
@@ -37,7 +52,7 @@ steps:
       - '--cache-control=public, max-age=31536000'
       - '--match-glob=**.css'
 
-  # 步驟 5：設定圖片檔案的長期快取
+  # 步驟 7：設定圖片檔案的長期快取
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'storage'
