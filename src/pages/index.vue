@@ -24,7 +24,7 @@ meta:
               />
             </svg>
           </div>
-          <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome</h1>
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome The Test</h1>
           <p class="text-gray-600">Sign in to continue</p>
         </div>
 
