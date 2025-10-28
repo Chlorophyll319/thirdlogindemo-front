@@ -17,7 +17,6 @@ steps:
       - 'storage'
       - 'rsync'
       - '-r'
-      - '--delete'
       - '--exclude=.git'
       - '--exclude=.git/**'
       - '--exclude=cloudbuild.yaml'
