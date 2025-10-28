@@ -12,7 +12,7 @@ steps:
       - 'rm'
       - '-r'
       - 'gs://thirdlogindemo-frontend/'
-    onFailure: 'CONTINUE'
+    allowFailure: true
 
   # 步驟 3：上傳所有檔案到 Cloud Storage
   - name: 'gcr.io/cloud-builders/gcloud'
