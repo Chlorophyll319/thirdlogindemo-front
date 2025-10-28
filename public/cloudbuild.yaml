@@ -11,7 +11,7 @@ steps:
       - 'checkout'
       - 'gh-pages'
 
-  # 步驟 2：上傳所有檔案到 Cloud Storage（會自動覆蓋舊檔案）
+  # 步驟 2：上傳所有檔案到 Cloud Storage
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'storage'
@@ -19,45 +19,6 @@ steps:
       - '-r'
       - '.'
       - 'gs://thirdlogindemo-frontend/'
-
-  # 步驟 3：設定 index.html 的快取頭
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'storage'
-      - 'objects'
-      - 'update'
-      - 'gs://thirdlogindemo-frontend/index.html'
-      - '--cache-control=public, max-age=3600'
-
-  # 步驟 4：設定 JS 檔案的長期快取
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'storage'
-      - 'objects'
-      - 'update'
-      - 'gs://thirdlogindemo-frontend/'
-      - '--cache-control=public, max-age=31536000'
-      - '--match-glob=**.js'
-
-  # 步驟 5：設定 CSS 檔案的長期快取
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'storage'
-      - 'objects'
-      - 'update'
-      - 'gs://thirdlogindemo-frontend/'
-      - '--cache-control=public, max-age=31536000'
-      - '--match-glob=**.css'
-
-  # 步驟 6：設定圖片檔案的長期快取
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'storage'
-      - 'objects'
-      - 'update'
-      - 'gs://thirdlogindemo-frontend/'
-      - '--cache-control=public, max-age=31536000'
-      - '--match-glob=**.{png,jpg,jpeg,gif,svg}'
 
 timeout: '600s'
 
