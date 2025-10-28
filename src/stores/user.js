@@ -39,8 +39,10 @@ export const useUserStore = defineStore(
     }
 
     const fetchProfile = async () => {
+      // 動態引入避免循環依賴
+      const userService = (await import('@/services/user')).default
       try {
-        const { data } = await apiAuth.get('/user/profile')
+        const { data } = await userService.getProfile()
         if (data.success) {
           user.value = data.data
         }

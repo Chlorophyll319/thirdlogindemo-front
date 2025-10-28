@@ -69,11 +69,10 @@ meta:
 </template>
 
 <script setup>
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+import userService from '@/services/user'
 
 const handleGoogleLogin = () => {
-  // 直接導向後端的 Google OAuth 端點
-  // 開發測試時可以加上 ?prompt=consent 強制顯示同意畫面
-  window.location.href = `${API_URL}/user/auth/google`
+  // 使用 service 層統一處理 Google OAuth 導向
+  userService.redirectToGoogleAuth()
 }
 </script>
