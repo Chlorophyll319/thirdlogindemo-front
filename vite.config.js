@@ -11,6 +11,7 @@ import Layouts from 'vite-plugin-vue-layouts-next'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+  base: './',
   plugins: [
     tailwindcss(),
     VueRouter({
