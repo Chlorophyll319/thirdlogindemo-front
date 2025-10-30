@@ -1,12 +1,13 @@
 // src/router/index.js
 import { setupLayouts } from 'virtual:generated-layouts'
-import { createRouter, createWebHistory, START_LOCATION } from 'vue-router/auto'
+import { createRouter, createWebHashHistory, START_LOCATION } from 'vue-router/auto'
 import { routes } from 'vue-router/auto-routes'
 import { useUserStore } from '@/stores/user'
 
 // 🛠️ 第 2 步：建立 router 實例並套用 layout
+// 使用 Hash History 以支援靜態部署（無需伺服器端配置）
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   // 🧩 第 1 步：套用 Layout 與自動路由
   routes: setupLayouts(routes),
 })
