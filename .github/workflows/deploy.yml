@@ -1,7 +1,7 @@
-# 自動打包到 gh-pages 分支
+# 自動打包
 
 # Action 名稱
-name: Build and Push to gh-pages
+name: Deploy
 # 觸發時機，當推送到 main 時
 on:
   push:
@@ -9,36 +9,23 @@ on:
 # 執行的工作
 jobs:
   # 工作名稱
-  build:
+  deploy:
     # 執行工作的虛擬機作業系統
     runs-on: ubuntu-latest
     # 工作步驟
     steps:
       # 步驟一：複製程式碼
-      - name: Checkout
+      - name: checkout
+        # 使用的 actions/checkout 複製程式碼
         uses: actions/checkout@v3
-
-      # 步驟二：設置 Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '22'
-
-      # 步驟三：安裝依賴並打包
+      # 步驟二：編譯
       - name: Install and Build
         run: |
           npm install
           npm run build
-        env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
-
-      # 步驟四：推送到 gh-pages 分支
-      - name: Push to gh-pages
-        run: |
-          cd dist
-          git init
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "Deploy: ${{ github.sha }}"
-          git push -f https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:gh-pages
+      # 步驟三：部署
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: dist
