@@ -1,0 +1,29 @@
+steps:
+  # 步驟 1：簽出 gh-pages 分支（先 fetch 所有分支）
+  - name: 'gcr.io/cloud-builders/git'
+    args:
+      - 'fetch'
+      - 'origin'
+      - 'gh-pages'
+
+  - name: 'gcr.io/cloud-builders/git'
+    args:
+      - 'checkout'
+      - 'gh-pages'
+
+  # 步驟 2：上傳所有檔案到 Cloud Storage（排除 .git 資料夾）
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'storage'
+      - 'rsync'
+      - '-r'
+      - '--exclude=.git'
+      - '--exclude=.git/**'
+      - '--exclude=cloudbuild.yaml'
+      - '.'
+      - 'gs://thirdlogindemo-frontend/'
+
+timeout: '600s'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
